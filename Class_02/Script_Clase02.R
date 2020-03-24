@@ -20,6 +20,7 @@ as.numeric(y)
 
 A<-1
 years<-2010:2020
+<<<<<<< HEAD
 year <- seq(2010,2020, by= 0.5)
 tiktoc<-c("Que", "linda", "te ves", "limpiando", "Esperancita", 4)
 tiktoc # si un elemento no es del mismo tipo los deja todos iguales.
@@ -31,23 +32,63 @@ m1%*%t(m1) # multiplicarla por su traspuesta
 m1
 solve(m1) #calcula la inversa 
 a1<-array(1:12,dim = c(2,2,3)) # estos tienen tres dimensiones, filas columnas y profundidad.
+=======
+year<- seq(2010,2020,by = 0.5)
+tiktoc<-c("Que", "linda", "te ves", "limpiando", "Esperancita")
+
+paste("Hola","Mundo",sep=" ")
+
+paste(tiktoc,collapse = " ")
+
+obj2<- as.numeric(c(1,2,3,4,"Esperancita"))
+is.na(obj2)
+
+
+numeros_en_texto<-c("1","2","3")
+as.numeric(numeros_en_texto)
+
+m1<-matrix(1:4,2,2)
+m1%*%t(m1)
+diag(m1)
+solve(m1)
+
+
+a1<-array(1:12,dim = c(2,2,3))
+
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 d1<-data.frame(m1)
 data("quakes") # promise
 d1<-data.frame(quakes)
 
 ls()
+<<<<<<< HEAD
 l1<-list(numerouno = A,años = years,tiktoc,m1)
 
 # Manipulación de Objetos
 ls()
 A<- 1 #forzando a que sea un entero si le agregamos una L
+=======
+
+l1<-list(Perrito=A,years,tiktoc,m1)
+A<-3L
+
+# Manipulación de Objetos
+ls()
+
+A<-1L
+
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 class(A)
 typeof(A) # es un poco mas avanzada, los elementos de que tipo son, doble, que tiene decimales y si es integer es entero
 
 length(years)
 length(m1)
 dim(m1)
+<<<<<<< HEAD
 dim(a1)
+=======
+
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 object.size(d1)
 
 names(d1)
@@ -57,36 +98,66 @@ tail(d1)
 rm(A)
 
 #Bonus: como se borra todo?
+<<<<<<< HEAD
 # rm(list=ls())
+=======
+rm(list=ls())
+
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 # Indexación uso de los []
 
 length(years)
-years[1]
+years[11]
 
 dim(m1)
+<<<<<<< HEAD
 m1[2,2] # fila y columna
 m1[3]
+=======
+m1[1,2]
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 
 dim(a1)
+class(a1)
 a1[2,1,3]
 
 l1[2]
 l1[2][[1]][1:2]
 
+<<<<<<< HEAD
 l1[[2]][1:2]
 l1$numerouno #este es el nombre que le puse antes a A.
 d1[1,]
 d1[,1]
 d1$lat[1:4] # d1 es de dos dimesniones 
+=======
+l1[[2]][3:5]
+
+l1$Perrito
+
+d1[1,]
+d1[,1]
+d1[,'lat']
+d1$mag[seq(1,16,2)]
+d1$lat[1:4]
+
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 d1[,'lat']
 
 d1$mag[-1]
 d1[1:4,c('lat','long')]
 
+<<<<<<< HEAD
 d1$mag>5 #Evalua si es mayor a 5 o no
 table(d1$mag>5)
 
 d1[d1$mag>6,] # coma vacia es para que nos de todas las columnas
+=======
+d1$mag>5
+table(d1$mag>5)
+d1[d1$mag>6,'stations']
+
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 d1$dummy_5up<-as.numeric(d1$mag>5)
 head(d1)
 
@@ -106,6 +177,14 @@ if(A==1){
   A<-1L
 }
 
+A<-1
+class(A)
+typeof(A)
+
+dim(A)
+length(A)
+
+# For loop
 
 for(i in 1:5){
   print(paste("Me le declaro a la ", i))
@@ -115,6 +194,7 @@ for(i in 1:5){
 }
 eps<-50/(i^2)
 i<-1
+eps<-50/(i^2)
 while(eps>0.001){
   eps<-50/(i^2)
   print(paste("eps value es still..", eps))
@@ -136,8 +216,12 @@ tapply(X = quakes$mag,INDEX = quakes$stations, FUN = mean)
 #https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
 library(tidyverse)
 #Cómo se instala el paquete si no lo tengo? Tank!!! ayudaaaa!
+<<<<<<< HEAD
 install.packages('tidyverse')
 
+=======
+#install.packages("tydiverse")
+>>>>>>> 7a0750334e5bd6a30dc923727a86b4ca42c7af30
 
 quakes %>% 
   filter(mag>6) %>% 
@@ -152,8 +236,11 @@ quakes %>%
 library(data.table)
 install.packages("data.table")
 #https://github.com/rstudio/cheatsheets/raw/master/datatable.pdf
-
+#install.packages("data.table")
 quakes<-data.table(quakes)
+
+
+quakes[quakes$mag>6,'mag']
 
 quakes[mag>6,.(mag)]
 
