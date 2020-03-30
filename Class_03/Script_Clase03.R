@@ -10,53 +10,78 @@
 # Reading an exporting data
 
 library(readxl)
+library(data.table)
 
-casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
+casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE) # stringsAsFalse se recomienda poner en False
+
+casos[,table((Región))]
+casos[,.N,by=.(Región)]
 
 casos<-casos[Región=="Metropolitana",]
 
-saveRDS
+saveRDS(casos,"Class_03/casosRM.rds") # para guardar la base de datos en la carpeta
 
-write.csv(casos,file = 'Class_03/CasosCovid_RM.csv',fileEncoding = 'UTF-8')
+write.csv(casos,file = 'Class_03/CasosCovid_RM.csv',fileEncoding = 'UTF-8') # se recomienda escribir en el archivo csv, ya que es de los más extendidos
 
-writexl::write_xlsx
+writexl::write_xlsx # los :: sirven para entrar a todas las funciona de writexl
 
 library(foreign)
 
 write.dta
 
-casosRM<-fread("Class_03/CasosCovid_RM.csv",header = T, showProgress = T,data.table = T)
+casosRM<-fread("Class_03/CasosCovid_RM.csv",header = T, showProgress = T,data.table = T) # fread permite leer en muchos tipos de funcionalidades
 
 casosRM[,table(Sexo)]
-casosRM[Sexo=="Fememino",Sexo:="Femenino"]
+casosRM[Sexo=="Fememino",Sexo:="Femenino"] # se reemplaza "Fememino" por "Femenino"
 
 
-# Creating (factor) variables
+# Creating (factor) variables -> factor permite convertir y manipular variables de tipo str que tienen leyendas/etiquetas asociadas
 
 class(casosRM$Sexo)
-
+casosRM[,Sexo:=factor(Sexo)]
 casosRM[,Sexo:=factor(Sexo,nmax = 2)]
 
 head(casosRM$Sexo)
 head(as.numeric(casosRM$Sexo))
+levels(casosRM$Sexo)
+labels(casosRM$Sexo)
+
 
 table(casosRM$Sexo)
 casosRM[,.N,by=.(Sexo)]
 casosRM[,.N,by=.(Sexo,`Centro de salud`)]
 
-#Collapsing by Centro de Salud 
+#Collapsing by Centro de Salud  ()
 
-casosRM[,sum(`Casos confirmados`,na.rm = T),by=.(`Centro de salud`)][,V1/sum(V1)]
+casosRM[,sum(`Casos confirmados`,na.rm = T),by=.(`Centro de salud`)] # esto no está correcto, ya que se suman los casos totales
+casosRM[,sum(`Casos confirmados`,na.rm = T),by=.(`Centro de salud`)][,V1/sum(V1)] # % de casos por centro de salud
+
+casosRM[,.N,by=.(`Centro de salud`)] # esto es mejor, porque no suma el total de casos, sino que ve los casos por centro de salud
+casosRM[,.N,by=.(`Centro de salud`)][,N/sum(N)] # % de casos por centro de salud
+
+casosRM[,mean(Edad,na.rm = T),by=.(`Centro de salud`)]
+casosRM[,max(Edad,na.rm = T),by=.(`Centro de salud`)]
+
+
 
 # collapsing by average age
 
-A<-casosRM[,.(AvAge=mean(Edad,na.rm = T)),by=.(`Centro de salud`)]
+A<-casosRM[,.(AvAge=mean(Edad,na.rm = T)),by=.(`Centro de salud`)] # media de edad por centro de salud
 
-B<-casosRM[,.(Total_centro=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`)]
+dim(A)
+casosRM[,.N,by=.(`Centro de salud`)]
+
+B<-casosRM[,.(Total_centro=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`)] # suma total, malo
 
 C<-casosRM[Sexo=="Femenino",.(Total_Centro_Mujeres=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`)]
 
+dim(C)
+
 D<-casosRM[Sexo=="Masculino",.(Total_Centro_Hombres=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`)]
+
+dim(D)
+
+
 
 
 #merging data sets
@@ -67,10 +92,11 @@ ABCD<-merge(ABC,D,by = "Centro de salud",all = T,sort = F)
 
 ABCD[,porc_mujeres:=Total_Centro_Mujeres/Total_centro]
 
-# reshaping
+# reshaping 
 
 E<-casosRM[,.(AvAge=mean(Edad,na.rm = T),`Casos confirmados`=sum(`Casos confirmados`,na.rm = T)),by=.(`Centro de salud`,Sexo)]
-G<-reshape(E,direction = 'wide',timevar = 'Sexo',v.names = c('AvAge','Casos confirmados'),idvar = 'Centro de salud')
+
+G<-reshape(E,direction = 'wide',timevar = 'Sexo',v.names = c('AvAge','Casos confirmados'),idvar = 'Centro de salud') # función reshape para reorganizar los datos 
 
 #---- Part 2: Visualization  -------------------
 
