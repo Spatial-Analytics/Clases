@@ -17,11 +17,13 @@ Por ahora, nos centraremos en las funciones de R y las posibles interacciones en
 ```{r Secuencias}
 seq(1,16)
 seq(1,16,3)
+seq(1,15,3)
 ```
 
 ### Repeticiones:
 ```{r Repeticiones} 
 rep(1,4)
+rep("1",4)
 rep(c(1,5,8,2),4)
 ```
 
@@ -35,15 +37,15 @@ sort(c(1,9,8,4,6,3,6,5,2), decreasing = T)
 ```{r Análisis básico} 
 max(c(1,9,8,4,6,3,6,5,2))
 min(c(1,9,8,4,6,3,6,5,2))
-mean(c(1,9,8,4,6,3,6,5,2))
-median(c(1,9,8,4,6,3,6,5,2))
-quantile(c(1,9,8,4,6,3,6,5,2))
+mean(c(1,9,8,4,6,3,6,5,2)) 
+median(c(1,9,8,4,6,3,6,5,2)) # primero te los ordena y después ve cuál está en la mitad
+quantile(c(1,9,8,4,6,3,6,5,2)) 
 ```
 
 ### Interacción
 ```{r Interacción} 
-mean(rep(min(1,5,2),5))
-sort(rep(seq(1,5,2),5))
+mean(rep(min(1,5,2),5)) 
+sort(rep(seq(1,5,2),5)) 
 ```
 
 <br>
@@ -54,7 +56,7 @@ Al trabajar con bases de datos es necesario saber que existen múltiples funcion
 ```{r paquetes}
 #install.packages("data.table")
 #install.packages("titanic")
-library(data.table)
+library(data.table) # data table es de las herramientas más rápidas y que sirven para funcionar eficientemente
 library(titanic)
 Titanic <- data.table(titanic_train)  ## Notar que ahí creamos un objeto que se llama Titanic, al cual transformamos en clase data.table
 ```
@@ -71,7 +73,7 @@ Titanic[,.(Survived,Age)]  ## También se puede con nombres de variables
 
 Ahora, aprendamos algunas estrategias de filtrado básico:
 
-```{r data.table}
+```{r filtrado}
 Titanic[Survived == 1,]  ## Me quedo con aquellas filas que cumplen la condición de que el individuo sobrevivió
 Titanic[Pclass %in% c(1,3),]  ## Me quedo con aquellas filas que cumplen la condición de que el individuo era de clase 1 o 3
 Titanic[Age %between% c(30,50),]  ## Me quedo con aquellas filas que cumplen la condición de que el individuo tenía entre 30 y 50 años
@@ -94,7 +96,7 @@ class(Titanic)
 class(Titanic[,Name])
 class(Titanic[,Ticket])
 class(Titanic[,Age])
-class(Titanic[,Survived])
+class(Titanic[,Survived]) # no existen muchas diferencias entre integer y numeric (integer se usa más que nada para menores procesamientos como 0 y 1)
 class(Titanic[,Embarked])
 ```
 
@@ -110,7 +112,7 @@ unique(Titanic[,Survived])
 En este caso son pocas categorías, pero: ¿que ocurriría si necesitamos saber cuantas categorías hay en la columna "Oficio" del censo de 2017? 
 
 ```{r N° Categorías}
-length(unique(Titanic[,Age]))  #Por ejemplo   
+length(unique(Titanic[,Age]))  # cantidad de valores diferentes que hay   
 length(unique(Titanic[,Name]))
 ```
 
