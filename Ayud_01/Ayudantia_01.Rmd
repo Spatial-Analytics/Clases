@@ -52,8 +52,8 @@ sort(rep(seq(1,5,2),5))
 Al trabajar con bases de datos es necesario saber que existen múltiples funciones que permiten analizar las cualidades y caracteristicas de estas. A continuación, se mostrará como trabajar con bases de datos de clase "data.table", ya sea en la manipulación de estas como el cálculo de valores básicos. El primer paso es escoger una base de datos con la cual trbajar. En dicha ayudantía trabajaremos con la base de datos "Titanic", la cual viene incluida en R al descargarlo.
 
 ```{r paquetes}
-#install.packages("data.table")
-#install.packages("titanic")
+install.packages("data.table")
+install.packages("titanic")
 library(data.table)
 library(titanic)
 Titanic <- data.table(titanic_train)  ## Notar que ahí creamos un objeto que se llama Titanic, al cual transformamos en clase data.table
@@ -111,7 +111,7 @@ En este caso son pocas categorías, pero: ¿que ocurriría si necesitamos saber 
 
 ```{r N° Categorías}
 length(unique(Titanic[,Age]))  #Por ejemplo   
-length(unique(Titanic[,Name]))
+length(unique(Titanic[,Name])) 
 ```
 
 ¿Existe alguna manera de sintetizar todo lo visto hasta ahora? Por supuesto que si.
