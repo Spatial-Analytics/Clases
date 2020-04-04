@@ -10,14 +10,26 @@
 # Reading an exporting data
 
 library(readxl)
+
 library(data.table) 
+
+casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE) # stringsAsFalse se recomienda poner en False
+
+library(data.table)
 
 casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE) # stringsAsFalse se recomienda poner en False
 
 casos[,table((Región))]
 casos[,.N,by=.(Región)]
 
+casos[,table((Región))]
+casos[,.N,by=.(Región)]
+
 casos<-casos[Región=="Metropolitana",] 
+
+saveRDS(casos,"Class_03/casosRM.rds") # para guardar la base de datos en la carpeta
+
+write.csv(casos,file = 'Class_03/CasosCovid_RM.csv',fileEncoding = 'UTF-8') # se recomienda escribir en el archivo csv, ya que es de los más extendidos
 
 saveRDS(casos,"Class_03/casosRM.rds") # para guardar la base de datos en la carpeta
 
@@ -67,6 +79,10 @@ casosRM[,max(Edad,na.rm = T),by=.(`Centro de salud`)]
 # collapsing by average age
 
 A<-casosRM[,.(AvAge=mean(Edad,na.rm = T)),by=.(`Centro de salud`)] # media de edad por centro de salud
+
+dim(A)
+casosRM[,.N,by=.(`Centro de salud`)]
+
 
 dim(A)
 casosRM[,.N,by=.(`Centro de salud`)]
