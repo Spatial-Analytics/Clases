@@ -10,7 +10,7 @@
 # Reading an exporting data
 
 library(readxl)
-library(data.table)
+library(data.table) 
 
 
 
