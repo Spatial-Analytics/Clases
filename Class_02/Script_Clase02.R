@@ -15,7 +15,7 @@
 # Creación de Objetos
 
 x<-NULL
-y<-c(TRUE,FALSE) 
+y<-c(TRUE,FALSE)  
 as.numeric(y)
 
 A<-1
@@ -26,7 +26,7 @@ tiktoc<-c("Que", "linda", "te ves", "limpiando", "Esperancita")
 obj2<-c(1,2,3,4,"Esperancita") # pasa todos por str, ya que si los pasara a números "Esperancita" sería NA
 
 class(tiktoc)
-numeros_en_texto<-c("1","2","3")
+numeros_en_texto<-c("1","2","3") 
 as.numeric(numeros_en_texto)
 
 m1<-matrix(1:4,2,2) # matrices tienen 2 dimensiones
