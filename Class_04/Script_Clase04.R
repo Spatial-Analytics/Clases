@@ -106,9 +106,12 @@ text(x =G$`Casos confirmados.Femenino`,y=G$`Casos confirmados.Masculino`, G$`Cen
 
 #ggplot2
 library(ggplot2)
+
+ggplot(data = E, mapping = aes(x = AvAge, y = `Casos confirmados`)) + geom_point()
+
 ggplot(data = G,mapping = aes(x=`Casos confirmados.Femenino`,y=`Casos confirmados.Masculino`))+geom_point()
 
-ggplot(G,aes(x=`Casos confirmados.Femenino`,y=`Casos confirmados.Masculino`))+geom_point(aes(size=AvAge.Femenino,colour=AvAge.Masculino))+geom_text(aes(label=`Centro de salud`),size=2,check_overlap = T)
+p1<-ggplot(G,aes(x=`Casos confirmados.Femenino`,y=`Casos confirmados.Masculino`))+geom_point(aes(size=AvAge.Femenino,colour=AvAge.Masculino))+geom_text(aes(label=`Centro de salud`),size=2,check_overlap = T)
 
 ggplot(data = E,mapping = aes(x=AvAge,y=`Casos confirmados`))+geom_point()+facet_wrap(~Sexo)+geom_smooth(method = 'lm',se=F) + geom_smooth(method = 'loess',col='red',se=F)
 
@@ -146,9 +149,10 @@ ggplot(casos,aes(x=Edad,group=Sexo,fill=Sexo))+geom_histogram()
 
 #https://chilecracia.org 
 
-#---- Part 3: Intro to Mapping  -------------------
-#install.packages("chilemapas")
-#install.packages("rgdal")
+#---- Part 3: Intro to Mapping  (Shapefile)-------------------
+install.packages("chilemapas")
+install.packages("rgdal")
+install.packages("sf")
 library(rgdal)
 library(sp)
 library(chilemapas)
@@ -164,6 +168,8 @@ class(comunas_rm)
 
 View(comunas_rm@data)
 plot(comunas_rm)
+
+coordinates(comunas_rm)
 
 
 centroids_rm<-SpatialPoints(coordinates(comunas_rm),proj4string = comunas_rm@proj4string)
