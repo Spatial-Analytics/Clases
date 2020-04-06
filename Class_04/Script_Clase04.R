@@ -174,7 +174,7 @@ lines(coordinates(comunas_rm),col='blue')
 
 str(comunas_rm@data)
 
-# Ejemplo 2: Polygonos
+# 3.2 Shapefiles as in the `sf` package
 
 zonas_censo<-data.table(censo_2017_zonas,stringsAsFactors = F)
 
