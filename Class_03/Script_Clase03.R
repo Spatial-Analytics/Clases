@@ -8,7 +8,7 @@
 #---- Part 1: Data Management  -------------------
 
 # Reading an exporting data
-
+#quiero ver si funciona
 library(readxl)
 library(data.table)
 
